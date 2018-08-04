@@ -23,7 +23,7 @@ function getTag(text) {
 }
 
 function makeRequest() {
-    var url = 'http://lapi.transitchicago.com/api/1.0/ttarrivals.aspx?key=3654e8cbb15840f7b928b2e39da94f1e&mapid=40380';
+    var url = 'https://lapi.transitchicago.com/api/1.0/ttarrivals.aspx?key=3654e8cbb15840f7b928b2e39da94f1e&mapid=40380';
     var myRequest = createRequest('GET', url);
     if (!myRequest) {
         alert('CORS not supported');
