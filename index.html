@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head></head>
+<body>
+<script>
+makeRequest();
+    
+function createRequest(method, url) {
+    var myRequest = new XMLHttpRequest();
+    if ("withCredentials" in myRequest) {
+        myRequest.open(method, url, true);
+    } else if (typeof XDomainRequest != "undefined") {
+        myRequest = new XDomainRequest();
+        myRequest.open(method, url);
+    } else {
+        myRequest = null;
+    }
+    return myRequest;
+}
+
+function getTag(text) {
+    return text.match('<arrT>(.*)?</arrT>')[0];
+}
+
+function makeRequest() {
+    var url = 'http://lapi.transitchicago.com/api/1.0/ttarrivals.aspx?key=3654e8cbb15840f7b928b2e39da94f1e&mapid=40380';
+    var myRequest = createRequest('GET', url);
+    if (!myRequest) {
+        alert('CORS not supported');
+        return;
+    }
+    myRequest.onload = function() {
+        var text = myRequest.responseText;
+        var arrT = getTag(text);
+        alert('Response from CORS request to ' + url + ': ' + arrT);
+    };
+    
+    myRequest.onerror = function() {
+        alert ('There was an error making the request.');
+    };
+    
+    myRequest.send();
+}
+</script>
+</body>
+</html>
