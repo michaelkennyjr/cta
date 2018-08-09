@@ -1,27 +1,23 @@
-<!DOCTYPE html>
+<!doctype HTML>
 <html>
-<head></head>
+
+<head>
+</head>
+
 <body>
 <script>
     
 function createRequest(method, url) {
-    var myRequest = new XMLHttpRequest();
-    
-    if ("withCredentials" in myRequest) {
-        //Chrome, Firefox, Opera, Safari
-        myRequest.open(method, url, true);
-        
+    var xhr = new XMLHttpRequest();
+    if ("withCredentials" in xhr) {
+        xhr.open(method, url, true);
     } else if (typeof XDomainRequest != "undefined") {
-        //Internet Explorer
-        myRequest = new XDomainRequest();
-        myRequest.open(method, url);
-        
+        xhr = new XDomainRequest();
+        xhr.open(method, url);
     } else {
-        //CORS not supported
-        myRequest = null;
-        alert('myRequest is null!');
+        xhr = null;
     }
-    return myRequest;
+    return xhr;
 }
 
 function getTag(text) {
@@ -31,26 +27,13 @@ function getTag(text) {
 function makeRequest() {
     var url = 'https://lapi.transitchicago.com/api/1.0/ttarrivals.aspx?key=3654e8cbb15840f7b928b2e39da94f1e&mapid=40380';
     var myRequest = createRequest('GET', url);
-    
-    if (!myRequest) {
-        alert('CORS not supported');
-        return;
-    }
-    
-    //Response handlers
-    myRequest.onload = function() {
-        var myText = myRequest.responseText;
-        var arrT = getTag(myText);
-        alert('Response to CORS request: ' + arrT);
-    };
-    
-    myRequest.onerror = function() {
-        alert ('There was an error making the request.');
-    };
-    
+    myRequest.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
     myRequest.send();
 }
 
+makeRequest();
+
 </script>
+
 </body>
 </html>
