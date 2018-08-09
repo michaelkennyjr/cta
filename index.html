@@ -6,13 +6,22 @@
     
 function createRequest(method, url) {
     var myRequest = new XMLHttpRequest();
+    
     if ("withCredentials" in myRequest) {
+        //Chrome, Firefox, Opera, Safari
         myRequest.open(method, url, true);
+        alert('This is a non-IE supported browser.');
+        
     } else if (typeof XDomainRequest != "undefined") {
+        //Internet Explorer
         myRequest = new XDomainRequest();
         myRequest.open(method, url);
+        alert('This is IE.');
+        
     } else {
+        //CORS not supported
         myRequest = null;
+        alert('myRequest is null!');
     }
     return myRequest;
 }
@@ -24,14 +33,17 @@ function getTag(text) {
 function makeRequest() {
     var url = 'https://lapi.transitchicago.com/api/1.0/ttarrivals.aspx?key=3654e8cbb15840f7b928b2e39da94f1e&mapid=40380';
     var myRequest = createRequest('GET', url);
+    
     if (!myRequest) {
         alert('CORS not supported');
         return;
     }
+    
+    //Response handlers
     myRequest.onload = function() {
-        var text = myRequest.responseText;
-        var arrT = getTag(text);
-        alert('Response from CORS request to ' + url + ': ' + arrT);
+        var myText = myRequest.responseText;
+        var arrT = getTag(myText);
+        alert('Response to CORS request: ' + arrT);
     };
     
     myRequest.onerror = function() {
