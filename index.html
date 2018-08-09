@@ -1,42 +1,29 @@
-<!doctype HTML>
+<!DOCTYPE html>
 <html>
-
-<head>
-</head>
+<head></head>
 
 <body>
+
 <script>
-    
-function createRequest(method, url) {
-    var xhr = new XMLHttpRequest();
-    if ("withCredentials" in xhr) {
-        xhr.open(method, url, true);
-    } else if (typeof XDomainRequest != "undefined") {
-        xhr = new XDomainRequest();
-        xhr.open(method, url);
-    } else {
-        xhr = null;
+
+var xhttp = new XMLHttpRequest();
+var apiKey = '3654e8cbb15840f7b928b2e39da94f1e';
+var myUrl = 'https://lapi.transitchicago.com/api/1.0/ttarrivals.aspx?key=' + apiKey + '&mapid=40380&outputType=JSON';
+
+xhttp.onreadystatechange = function() {
+if (this.readyState == 4 && this.status == 200) {
+    var myResults = JSON.parse(this.responseText);
+    //When the response is ready, do something (myFunc) with the results
+    myFunc(myResults);
     }
-    return xhr;
+};
+
+function myFunc(x) {
+    alert(x);
 }
 
-function getTag(text) {
-    return text.match('<arrT>(.*)?</arrT>')[0];
-}
-
-function makeRequest() {
-    var url = 'https://lapi.transitchicago.com/api/1.0/ttarrivals.aspx?key=3654e8cbb15840f7b928b2e39da94f1e&mapid=40380';
-    var myRequest = createRequest('GET', url);
-    myRequest.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-    myRequest.send();
-    var xml = myRequest.responseText;
-    mparse = new DOMParser();
-    xmlDoc = mparse.parseFromString(xml, "text/xml");
-    alert(xmlDoc.getElementsByTagName("arrT")[i].childNodes[0].nodeValue);
-    console.log('I did the thing.');
-}
-
-makeRequest();
+xhttp.open('GET', myUrl, true);
+xhttp.send();
 
 </script>
 
