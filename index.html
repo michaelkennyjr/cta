@@ -29,6 +29,7 @@ function makeRequest() {
     var myRequest = createRequest('GET', url);
     myRequest.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
     myRequest.send();
+    alert(myRequest.responseText);
 }
 
 makeRequest();
