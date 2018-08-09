@@ -29,7 +29,10 @@ function makeRequest() {
     var myRequest = createRequest('GET', url);
     myRequest.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
     myRequest.send();
-    alert(myRequest.responseText);
+    var xml = myRequest.responseText;
+    mparse = new DOMParser();
+    xmlDoc = mparse.parseFromString(xml, "text/xml");
+    alert(xmlDoc.getElementsByTagName("arrT")[i].childNodes[0].nodeValue;
 }
 
 makeRequest();
