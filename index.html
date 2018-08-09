@@ -32,7 +32,7 @@ function makeRequest() {
     var xml = myRequest.responseText;
     mparse = new DOMParser();
     xmlDoc = mparse.parseFromString(xml, "text/xml");
-    alert(xmlDoc.getElementsByTagName("arrT")[i].childNodes[0].nodeValue;
+    alert(xmlDoc.getElementsByTagName("arrT")[i].childNodes[0].nodeValue);
     console.log('I did the thing.');
 }
 
