@@ -10,13 +10,11 @@ function createRequest(method, url) {
     if ("withCredentials" in myRequest) {
         //Chrome, Firefox, Opera, Safari
         myRequest.open(method, url, true);
-        alert('This is a non-IE supported browser.');
         
     } else if (typeof XDomainRequest != "undefined") {
         //Internet Explorer
         myRequest = new XDomainRequest();
         myRequest.open(method, url);
-        alert('This is IE.');
         
     } else {
         //CORS not supported
